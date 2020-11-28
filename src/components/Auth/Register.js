@@ -32,7 +32,7 @@ class Register extends React.Component {
       error = { message: 'Fill in all fields' };
       this.setState({ errors: errors.concat(error) });
       return false;
-    } else if (!this.isPasswordVaild(this.state)) {
+    } else if (!this.isPasswordValid(this.state)) {
       error = { message: 'Password is invalid' };
       this.setState({ errors: errors.concat(error) });
       return false;
@@ -45,7 +45,7 @@ class Register extends React.Component {
     return !username.length || !email.length || !password.length || !passwordConfirmation.length;
   };
 
-  isPasswordVaild = ({ password, passwordConfirmation }) => {
+  isPasswordValid = ({ password, passwordConfirmation }) => {
     if (password.length < 6 || passwordConfirmation.length < 6) {
       return false;
     } else if (password !== passwordConfirmation) {

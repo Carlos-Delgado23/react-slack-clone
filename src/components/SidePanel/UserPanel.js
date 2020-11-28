@@ -1,5 +1,4 @@
 import React from 'react';
-import frirebase from '../../firebase'
 import { Grid, Header, Icon, Dropdown, Image } from 'semantic-ui-react';
 import firebase from '../../firebase';
 
