@@ -1,6 +1,8 @@
-import React from 'react';
+import React from 'react'
 import firebase from '../../firebase'
-import { Menu, Icon, Modal, Form, Input, Button } from 'semantic-ui-react';
+import { connect } from 'react-redux'
+import { setCurrentChannel } from '../../actions'
+import { Menu, Icon, Modal, Form, Input, Button } from 'semantic-ui-react'
 
 class Channels extends React.Component {
   state = {
@@ -10,14 +12,14 @@ class Channels extends React.Component {
     channelDetails: '',
     channelsRef: firebase.database().ref('channels'),
     modal: false
-  };
+  }
 
   handleSubmit = event => {
     event.preventDefault();
     if (this.isFormValid(this.state)) {
       this.addChannel();
     }
-  };
+  }
 
   componentDidMount() {
     this.addListeners()
@@ -32,9 +34,9 @@ class Channels extends React.Component {
   }
 
   addChannel = () => {
-    const { channelsRef, channelName, channelDetails, user } = this.state;
+    const { channelsRef, channelName, channelDetails, user } = this.state
 
-    const key = channelsRef.push().key;
+    const key = channelsRef.push().key
 
     const newChannel = {
       id: key,
@@ -44,7 +46,7 @@ class Channels extends React.Component {
         name: user.displayName,
         avatar: user.photoURL
       }
-    };
+    }
 
     channelsRef
       .child(key)
@@ -60,14 +62,18 @@ class Channels extends React.Component {
   }
 
   handleChange = event => {
-    this.setState({ [event.target.name]: event.target.value });
-  };
+    this.setState({ [event.target.name]: event.target.value })
+  }
+
+  changeChannel = channel => {
+    this.props.setCurrentChannel(channel)
+  }
 
   displayChannels = channels =>
     channels.length > 0 && channels.map(channel => (
       <Menu.Item
         key={channel.id}
-        onClick={() => console.log(channel)}
+        onClick={() => this.changeChannel(channel)}
         name={channel.name}
         style={{ opacity: 0.7 }}
       >
@@ -75,10 +81,11 @@ class Channels extends React.Component {
       </Menu.Item>
     ))
 
-  isFormValid = ({ channelName, channelDetails }) => channelName && channelDetails;
+  isFormValid = ({ channelName, channelDetails }) => channelName && channelDetails
 
-  openModal = () => this.setState({ modal: true });
-  closeModal = () => this.setState({ modal: false });
+  openModal = () => this.setState({ modal: true })
+
+  closeModal = () => this.setState({ modal: false })
 
   render() {
     const { channels, modal } = this.state;
@@ -133,4 +140,4 @@ class Channels extends React.Component {
   }
 }
 
-export default Channels;
+export default connect(null, { setCurrentChannel })(Channels);
