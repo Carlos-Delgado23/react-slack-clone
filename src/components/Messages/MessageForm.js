@@ -18,7 +18,7 @@ class MessageForm extends React.Component {
   openModal = () => this.setState({ modal: true })
   openModal = () => this.setState({ modal: false })
 
-  hanleChange = event => {
+  handleChange = event => {
     this.setState({ [event.target.name]: event.target.value })
   }
 
@@ -63,6 +63,10 @@ class MessageForm extends React.Component {
     }
   }
 
+  uploadFile = (file, metadata) => {
+
+  }
+
   render() {
     const { errors, message, loading, modal } = this.state
 
@@ -71,7 +75,7 @@ class MessageForm extends React.Component {
         <Input
           fluid
           name="message"
-          onChange={this.hanleChange}
+          onChange={this.handleChange}
           value={message}
           style={{ marginBottom: '0.7em' }}
           label={<Button icon={'add'} />}
@@ -100,6 +104,7 @@ class MessageForm extends React.Component {
           <FileModal
             modal={modal}
             closeModal={this.closeModal}
+            uploadFile={this.uploadFile}
           />
         </Button.Group>
       </Segment>
