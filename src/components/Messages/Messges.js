@@ -16,14 +16,6 @@ class Messages extends React.Component {
     channel: this.props.currentChannel
   }
 
-  componentDidMount() {
-    const { channel, user } = this.state
-
-    if (channel && user) {
-      this.addListeners(channel.id)
-    }
-  }
-
   addListeners = channelId => {
     this.addMessageListener(channelId)
   }
@@ -47,6 +39,14 @@ class Messages extends React.Component {
         user={this.state.user}
       />
     ))
+  }
+
+  componentDidMount() {
+    const { channel, user } = this.state
+
+    if (channel && user) {
+      this.addListeners(channel.id)
+    }
   }
 
   render() {
