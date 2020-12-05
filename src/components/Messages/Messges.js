@@ -6,6 +6,7 @@ import MessageForm from './MessageForm'
 import Message from './Message'
 
 import { Segment, Comment } from 'semantic-ui-react'
+import ProgressBar from './ProgressBar'
 
 class Messages extends React.Component {
   state = {
@@ -13,7 +14,8 @@ class Messages extends React.Component {
     messages: [],
     messagesLoading: true,
     user: this.props.currentUser,
-    channel: this.props.currentChannel
+    channel: this.props.currentChannel,
+    progressBar: false,
   }
 
   addListeners = channelId => {
@@ -49,15 +51,21 @@ class Messages extends React.Component {
     }
   }
 
+  isProgressBarVisible = percent => {
+    if (percent > 0) {
+      this.setState({ progressBar: true })
+    }
+  }
+
   render() {
-    const { messagesRef, messages, channel, user } = this.state
+    const { messagesRef, messages, channel, user, progressBar } = this.state
 
     return (
       <>
         <MessagesHeader />
 
         <Segment>
-          <Comment.Group className="messages">
+          <Comment.Group className={progressBar ? 'messages__progress' : 'messages'}>
             {this.displayMessages(messages)}
           </Comment.Group>
         </Segment>
@@ -66,6 +74,7 @@ class Messages extends React.Component {
           messagesRef={messagesRef}
           currentUser={user}
           currentChannel={channel}
+          isProgressBarVisible={this.isProgressBarVisible}
         />
       </>
     )
